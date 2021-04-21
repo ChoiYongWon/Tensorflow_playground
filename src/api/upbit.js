@@ -16,11 +16,11 @@ module.exports =  {
     },
 
     getCoinInfo : (name) => {
-        const url = 'https://api.upbit.com/v1/candles/minutes/240?market='+name+'&count=200'
+        const url = 'https://api.upbit.com/v1/candles/days?market='+name+'&count=200'
         const options = {
             method: 'GET',
         };
-        const timeout = 40
+        const timeout = 50
         return new Promise((resolve, reject)=>{
             setTimeout(()=>{
                 resolve(fetch(url, options).then(data=>data.json()))

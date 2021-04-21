@@ -4,6 +4,7 @@
  */
 
 require("@tensorflow/tfjs-node")
+
 const tf = require('@tensorflow/tfjs')
 const X = tf.input({shape : [20, 4]})
 const H1 = tf.layers.lstm({
@@ -22,12 +23,11 @@ model.compile({
 })
 
 module.exports = {
-    info : model.summary(),
+    info : ()=> model.summary(),
     learn : (x, y)=>{
         return new Promise((resolve)=>{
             model.fit(x, y, {
-                epochs : 1,
-                batchSize : 10,
+                epochs : 50,
                 callbacks : {
                     onEpochEnd : (epochs, logs)=>{
                         console.log("epoch",epochs,"logs",Math.sqrt(logs.loss))
@@ -39,7 +39,8 @@ module.exports = {
         })
     },
     save : async ()=>{
-        await model.save("file://")
+
+        await model.save("file://model")
     },
     predict : (x) => {
         return model.predict(x)
