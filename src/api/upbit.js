@@ -15,8 +15,8 @@ module.exports =  {
         return fetch(url, options).then(data=>data.json()).then(data=>data.map(i=>i.market))
     },
 
-    getCoinInfo : (name) => {
-        const url = 'https://api.upbit.com/v1/candles/days?market='+name+'&count=200'
+    getCoinInfo : (name, count) => {
+        const url = 'https://api.upbit.com/v1/candles/days?market='+name+'&count='+count
         const options = {
             method: 'GET',
         };

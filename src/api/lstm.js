@@ -6,13 +6,13 @@
 require("@tensorflow/tfjs-node")
 
 const tf = require('@tensorflow/tfjs')
-const X = tf.input({shape : [20, 4]})
+const X = tf.input({shape : [50, 4]})
 const H1 = tf.layers.lstm({
-    units : 32,  activation: 'relu'
+    units : 50,  activation: 'relu'
 }).apply(X)
 const Y = tf.layers.dense({units : 1}).apply(H1)
 
-const model = tf.model({
+let model = tf.model({
     inputs : X,
     outputs : Y
 })
@@ -39,8 +39,11 @@ module.exports = {
         })
     },
     save : async ()=>{
-
         await model.save("file://model")
+    },
+
+    load : async () => {
+        model = await tf.loadLayersModel('file://model/model.json');
     },
     predict : (x) => {
         return model.predict(x)
